@@ -5,6 +5,10 @@ function numberValidation(number) {
     return number.toFixed(2);
 }
 function stringValidation(value) {
+    value = value.trim();
+    if(value.length === 0) {
+        throw new Error(`The string cannot be empty`);
+    }
     if (!value && typeof value !== 'string') {
         throw new Error(`Value must be a valid string`);
     }
