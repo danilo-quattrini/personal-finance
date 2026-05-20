@@ -19,6 +19,9 @@ describe('Account', () => {
         it('should throw if initial balance is empty', () => {
             assert.throws(() => Account(`Danilo`,`Quattrini`, null), Error);
         });
+        it('should throw if the string it\'s empty', () => {
+            assert.throws(() => new Account(`  `,`  `, 100), Error);
+        })
     });
 
 
