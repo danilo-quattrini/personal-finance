@@ -1,0 +1,27 @@
+{
+  "name": "personal-finance",
+  "version": "1.0.0",
+  "description": "Personal finance it's a project entirely in JS to test my knowledge on JS and testing with Mocha & Chai",
+  "homepage": "https://github.com/danilo-quattrini/personal-finance#readme",
+  "bugs": {
+    "url": "https://github.com/danilo-quattrini/personal-finance/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danilo-quattrini/personal-finance.git"
+  },
+  "license": "MIT",
+  "author": "Danilo Quattrini",
+  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/*.test.js"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "mocha": "^11.7.5"
+  }
+}
