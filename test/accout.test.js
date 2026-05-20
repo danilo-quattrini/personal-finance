@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import {Account} from '../src/Account.js';
+import {Account} from '../src/account.js';
 
 describe('Account', () => {
 
