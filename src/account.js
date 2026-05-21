@@ -30,6 +30,14 @@ function getSurname() {
 function getFullName() {
     return this.name + ' ' + this.surname;
 }
+
+/**
+ * Return an array with all the transactions made by the user.
+ * @returns {[]} array with a list of object that represent each transaction
+ */
+function getHistory() {
+    return this.transactionHistory;
+}
 export function Account(name, surname, balance) {
     string(name);
     string(surname);
@@ -38,6 +46,7 @@ export function Account(name, surname, balance) {
         name,
         surname,
         balance,
+        transactionHistory: [],
         getBalance,
         getName,
         getSurname,

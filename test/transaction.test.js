@@ -5,7 +5,7 @@ describe('Transaction operation', () => {
     describe('error cases', () => {
 
         describe('deposit operation', () => {
-            const user = new Account(`Lorenzo`, `Mangione`, 0);
+            const user = Account(`Lorenzo`, `Mangione`, 0);
             it('should throw an error if the amount to deposit it\'s negative', () => {
                 assert.throws(() => user.deposit(-1), Error)
             })
@@ -15,17 +15,17 @@ describe('Transaction operation', () => {
             })
         })
         describe('withdraw operation', () => {
-            const user = new Account(`Lorenzo`, `Mangione`, 50);
+            const user = Account(`Lorenzo`, `Mangione`, 50);
             it('should throw an error if the amount to withdraw it\'s negative', () => {
-                assert.throws(() => user.withdraw(user, -1), Error)
+                assert.throws(() => user.withdraw(-1), Error)
             })
 
             it('should throw an error if the amount to withdraw it\'s empty', () => {
-                assert.throws(() => user.withdraw(user), Error)
+                assert.throws(() => user.withdraw(), Error)
             })
 
             it('should throw an error if the user doesn\'t have enough money in the balance to withdraw the desire amout', () => {
-                assert.throws(() => user.withdraw(user, 100), Error)
+                assert.throws(() => user.withdraw(100), Error)
             })
         })
 
@@ -35,7 +35,7 @@ describe('Transaction operation', () => {
 
         describe('deposit operation', () => {
 
-            const user = new Account(`Francesco`, `Mancini`, 100);
+            const user = Account(`Francesco`, `Mancini`, 100);
             it('should return the balance with the new amount inserted', () => {
                 user.deposit(100);
                 assert.equal(user.getBalance(), 200);
@@ -54,7 +54,7 @@ describe('Transaction operation', () => {
 
         describe('withdraw operation', () => {
 
-            const user = new Account(`Francesco`, `Mancini`, 100);
+            const user = Account(`Francesco`, `Mancini`, 100);
 
             it('should return the new balance with the amount withdrawn', () => {
                 assert.equal(user.getBalance(), 100);
