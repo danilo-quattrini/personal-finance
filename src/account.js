@@ -25,6 +25,36 @@ function stringValidation(value) {
     }
 }
 
+/**
+ * Returns the balance of the user
+ * @returns {number} the balance of the user
+ */
+function getBalance() {
+    return this.balance;
+}
+/**
+ * Returns the name of the user
+ * @returns {string} the name of the user
+ */
+function getName() {
+    return this.name;
+}
+
+/**
+ * Returns the surname of the user
+ * @returns {string} the surname of the user
+ */
+function getSurname() {
+    return this.surname;
+}
+
+/**
+ * Returns the surname of the user
+ * @returns {string} the surname of the user
+ */
+function getFullName() {
+    return this.name + ' ' + this.surname;
+}
 export function Account(name, surname, balance) {
     stringValidation(name);
     stringValidation(surname);
@@ -33,5 +63,9 @@ export function Account(name, surname, balance) {
         name,
         surname,
         balance,
+        getBalance,
+        getName,
+        getSurname,
+        getFullName,
     };
 }

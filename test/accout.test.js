@@ -35,16 +35,21 @@ describe('Account', () => {
 
         it('should return the balance', () => {
             const account = new Account(`Danilo`, `Quattrini`, 100.99);
-            assert.equal(account.balance, 100.99);
+            assert.equal(account.getBalance(), 100.99);
         })
         it('should return the name', () => {
             const account = new Account(`Danilo`, `Quattrini`, 100);
-            assert.equal(account.name, `Danilo`);
+            assert.equal(account.getName(), `Danilo`);
         })
 
         it('should return the surname', () => {
             const account = new Account(`Danilo`, `Quattrini`, 100);
-            assert.equal(account.surname, `Quattrini`);
+            assert.equal(account.getSurname(), `Quattrini`);
+        })
+
+        it('should return the full name', () => {
+            const account = new Account(`Danilo`, `Quattrini`, 100);
+            assert.equal(account.getFullName(), `Danilo Quattrini`);
         })
 
     })
