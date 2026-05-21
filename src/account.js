@@ -1,5 +1,5 @@
 import {number, string} from './validation.js'
-import {deposit} from './transaction.js'
+import {deposit, withdraw} from './transaction.js'
 /**
  * Returns the balance of the user
  * @returns {number} the balance of the user
@@ -43,5 +43,6 @@ export function Account(name, surname, balance) {
         getSurname,
         getFullName,
         deposit,
+        withdraw,
     };
 }
