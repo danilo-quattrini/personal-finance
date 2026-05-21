@@ -5,7 +5,10 @@
  * @returns {string}
  */
 export function number(number) {
-    if(number < 0 && !isNaN(number)) {
+    if(isNaN(number) || number === null || number === undefined) {
+        throw new Error(`Value must be a valid number`);
+    }
+    if(number < 0) {
         throw new Error(`Number must be a positive integer`);
     }
     return number.toFixed(2);
@@ -16,11 +19,10 @@ export function number(number) {
  * @param value
  */
 export function string(value) {
-    value = value.trim();
-    if(value.length === 0) {
-        throw new Error(`The string cannot be empty`);
-    }
-    if (!value && typeof value !== 'string') {
+    if(value === null || value === undefined || typeof value !== 'string') {
         throw new Error(`Value must be a valid string`);
+    }
+    if(value.trim().length === 0) {
+        throw new Error(`The string cannot be empty`);
     }
 }
