@@ -1,5 +1,6 @@
 import {assert} from 'chai';
 import {Account} from "../src/account.js";
+import {history} from "../src/transaction.js";
 describe('Transaction operation', () => {
 
     describe('error cases', () => {
@@ -29,6 +30,29 @@ describe('Transaction operation', () => {
             })
         })
 
+        describe('history operation', () => {
+            it('should throw an error if the type of operation is empty', () => {
+                assert.throws(() => history(`  `, 100, 500), Error)
+                assert.throws(() => history(null, 100, 500), Error)
+                assert.throws(() => history(undefined, 100, 500), Error)
+                assert.throws(() => history(100, 500), Error)
+            })
+
+            it('should throw an error if the transaction is not a valid one', () => {
+                let transactionType = 'Not a valid transaction type name';
+                assert.throws(() => history(transactionType, 100, 500), Error, `Transaction type "${transactionType}" not found.`)
+                transactionType = 'WithDrawD';
+                assert.throws(() => history(transactionType, 100, 500), Error, `Transaction type "${transactionType}" not found.`)
+                transactionType = '   withdraw   ';
+                assert.throws(() => history(transactionType, 100, 500), Error, `Transaction type "${transactionType}" not found.`)
+             })
+
+            it('should throw an error if the amount is empty or negative', () => {
+                assert.throws(() => history(` Random Value `, 500), Error)
+                assert.throws(() => history(` Random Value `, null, 500), Error)
+                assert.throws(() => history(`Deposit`,-100, 500), Error)
+            })
+        })
     });
 
     describe('normal cases', () => {
