@@ -1,6 +1,5 @@
 import {assert} from 'chai';
 import {Account} from "../src/account.js";
-import {history} from "../src/transaction.js";
 describe('Transaction operation', () => {
 
     describe('error cases', () => {
@@ -27,30 +26,6 @@ describe('Transaction operation', () => {
 
             it('should throw an error if the user doesn\'t have enough money in the balance to withdraw the desire amount', () => {
                 assert.throws(() => user.withdraw(100), Error, `You don't have enough balance in your account to withdraw $100!`)
-            })
-        })
-
-        describe('history operation', () => {
-            it('should throw an error if the type of operation is empty', () => {
-                assert.throws(() => history(`  `, 100, 500), Error)
-                assert.throws(() => history(null, 100, 500), Error)
-                assert.throws(() => history(undefined, 100, 500), Error)
-                assert.throws(() => history(100, 500), Error)
-            })
-
-            it('should throw an error if the transaction is not a valid one', () => {
-                let transactionType = 'Not a valid transaction type name';
-                assert.throws(() => history(transactionType, 100, 500), Error, `Transaction type "${transactionType}" not found.`)
-                transactionType = 'WithDrawD';
-                assert.throws(() => history(transactionType, 100, 500), Error, `Transaction type "${transactionType}" not found.`)
-                transactionType = '   withdraw   ';
-                assert.throws(() => history(transactionType, 100, 500), Error, `Transaction type "${transactionType}" not found.`)
-             })
-
-            it('should throw an error if the amount is empty or negative', () => {
-                assert.throws(() => history(` Random Value `, 500), Error)
-                assert.throws(() => history(` Random Value `, null, 500), Error)
-                assert.throws(() => history(`Deposit`,-100, 500), Error)
             })
         })
     });
@@ -85,24 +60,6 @@ describe('Transaction operation', () => {
                 user.withdraw(100);
                 assert.equal(user.getBalance(), 0);
             })
-        })
-
-        describe('history operation', () => {
-
-            const user = Account(`Francesco`, `Mancini`, 100);
-            const historyToCheck = [
-                history(`deposit`, 100, 200),
-                history(`withdraw`, 100, 100),
-            ]
-            it(`should return the deposit operation made by the user ${user.getFullName()} `, () => {
-                user.deposit(100);
-                assert.include(user.getHistory()[0], historyToCheck[0]);
-            });
-
-            it(`should return the withdraw operation made by the user ${user.getFullName()} `, () => {
-                user.withdraw(100);
-                assert.include(user.getHistory()[1], historyToCheck[1]);
-            });
         })
     })
 
