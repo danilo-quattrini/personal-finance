@@ -26,3 +26,14 @@ export function string(value) {
         throw new Error(`The string cannot be empty`);
     }
 }
+
+/**
+ * Check if the transaction it's into a valid type
+ * @param type the type of transaction passed to the function
+ */
+export function transactionType(type) {
+    const operations = ['withdraw', 'deposit'];
+    if (!operations.includes(type.toLowerCase())) {
+        throw Error(`Transaction type "${type}" not found.`);
+    }
+}
