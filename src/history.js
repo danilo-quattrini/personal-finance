@@ -23,7 +23,7 @@ export function transaction(type, amount, balance) {
     transactionType(type);
     return {
         [id]: Math.random().toString(16).slice(2),
-        type: transactionType,
+        type,
         amount: amount,
         userBalance: balance,
     }
