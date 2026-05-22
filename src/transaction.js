@@ -1,4 +1,5 @@
 import {number} from './validation.js'
+import {save} from "./history.js";
 
 /**
  * Deposit an amount of money in the user account.
@@ -7,6 +8,7 @@ import {number} from './validation.js'
 export function deposit(amount) {
     number(amount);
     this.balance += amount;
+    save(this.transactionHistory, {type:`deposit`, amount, balance: this.balance});
 }
 
 /**
@@ -16,7 +18,8 @@ export function deposit(amount) {
 export function withdraw(amount) {
     number(amount);
     if(this.balance < amount){
-        throw new Error('You don\'t have enough balance in your account to withdraw!');
+        throw new Error(`You don't have enough balance in your account to withdraw $${amount}!`);
     }
     this.balance -= amount;
+    save(this.transactionHistory, {type:`withdraw`, amount, balance: this.balance});
 }

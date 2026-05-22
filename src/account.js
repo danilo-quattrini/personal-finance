@@ -51,6 +51,7 @@ export function Account(name, surname, balance) {
         getName,
         getSurname,
         getFullName,
+        getHistory,
         deposit,
         withdraw,
     };
