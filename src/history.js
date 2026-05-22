@@ -1,4 +1,4 @@
-import {number, string, transactionType} from "./validator.js";
+import {isNumber, isPositive, isString, transactionType} from "./validator.js";
 const id = Symbol("Transaction identifier");
 
 /**
@@ -10,6 +10,23 @@ export function save(history, element) {
     history.push(transaction(element.type, element.amount, element.balance));
 }
 /**
+ * Function to validate the values
+ * @param type
+ * @param amount
+ * @param balance
+ */
+function validate(type, amount, balance) {
+    if (!isString(type)) {
+        throw new Error(`The name you insert it's not valid`);
+    }
+    if (!isNumber(amount) || !isPositive(amount)) {
+        throw new Error(`The name you insert it's not valid`);
+    }
+    if (!isNumber(balance) || !isPositive(balance)) {
+        throw new Error('Invalid balance');
+    }
+}
+/**
  * Return a history object that track of all the operation made into the account
  * @param {string} type
  * @param {number} amount
@@ -17,9 +34,7 @@ export function save(history, element) {
  * @returns {{type: *, amount: *, userBalance: *}}
  */
 export function transaction(type, amount, balance) {
-    string(type);
-    number(amount);
-    number(balance);
+    validate(type, amount, balance);
     transactionType(type);
     return {
         [id]: Math.random().toString(16).slice(2),
