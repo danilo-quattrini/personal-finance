@@ -1,4 +1,4 @@
-import {number, string} from './validation.js'
+import {number, string} from './validator.js'
 import {deposit, withdraw} from './transaction.js'
 /**
  * Returns the balance of the user

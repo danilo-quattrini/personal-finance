@@ -1,4 +1,4 @@
-import {number} from './validation.js'
+import {number} from './validator.js'
 import {save} from "./history.js";
 
 /**

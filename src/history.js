@@ -1,4 +1,4 @@
-import {number, string, transactionType} from "./validation.js";
+import {number, string, transactionType} from "./validator.js";
 const id = Symbol("Transaction identifier");
 
 /**
