@@ -25,7 +25,7 @@ export function isNumber(number) {
 }
 
 /**
- * Check if a gi
+ * Check if a given string value respect a min and a max length
  * @param value
  * @param min
  * @param max

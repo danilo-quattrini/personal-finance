@@ -1,4 +1,4 @@
-import {isNumber, isPositive, isString} from './validator.js'
+import {isNumber, isPositive, isString} from './validator/validator.js'
 import {deposit, withdraw} from './transaction.js'
 /**
  * Returns the balance of the user
