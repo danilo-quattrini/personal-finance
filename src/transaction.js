@@ -1,4 +1,4 @@
-import {number} from './validator.js'
+import {isNumber, isPositive} from './validator.js'
 import {save} from "./history.js";
 
 /**
@@ -6,7 +6,9 @@ import {save} from "./history.js";
  * @param amount
  */
 export function deposit(amount) {
-    number(amount);
+    if(! isNumber(amount) || ! isPositive(amount)) {
+        throw new Error(`The amount must valid and be a positive integer`);
+    }
     this.balance += amount;
     save(this.transactionHistory, {type:`deposit`, amount, balance: this.balance});
 }
@@ -16,7 +18,9 @@ export function deposit(amount) {
  * @param amount
  */
 export function withdraw(amount) {
-    number(amount);
+    if(! isNumber(amount) || ! isPositive(amount)) {
+        throw new Error(`The amount must valid and be a positive integer`);
+    }
     if(this.balance < amount){
         throw new Error(`You don't have enough balance in your account to withdraw $${amount}!`);
     }

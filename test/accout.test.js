@@ -40,7 +40,6 @@ describe('Account', () => {
         })
       });
 
-
     describe('normal cases', () => {
 
         it('should return the balance', () => {
