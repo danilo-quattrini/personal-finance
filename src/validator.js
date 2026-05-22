@@ -41,7 +41,7 @@ export function size(value, min = 0, max = Infinity) {
  * @returns {string} string sanitized
  */
 export function sanitizeString(str){
-    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+    str = str.replace(/[^a-z0-9áéíóúñü .,_-]/gim,"");
     return str.trim();
 }
 /**
