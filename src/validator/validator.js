@@ -49,8 +49,9 @@ export function sanitizeString(str){
  * @param string
  */
 export function isString(string) {
+    if(isEmpty(string)) return false;
     const sanitizedString = sanitizeString(string);
-    return ! isEmpty(sanitizedString) && typeof sanitizedString === 'string' && size(sanitizedString);
+    return typeof sanitizedString === 'string' && size(sanitizedString);
 }
 
 /**
