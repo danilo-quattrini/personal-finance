@@ -29,21 +29,32 @@ describe("History operations", () => {
     })
 
     describe("normal cases", () => {
-        const user = Account(`Francesco`, `Mancini`, 100);
+        const alice = Account(`Alice`, `Mancini`, 100);
+        const bob = Account(`Bob`, `Fernando`, 300);
 
-        const historyToCheck = [
+        const aliceHistory = [
             transaction(`deposit`, 100, 200),
             transaction(`withdraw`, 100, 100),
         ]
-        it(`should return the deposit operation made by the user ${user.getFullName()} `, () => {
-            user.deposit(100);
-            assert.include(user.getHistory()[0], historyToCheck[0]);
+        const bobHistory = [
+            transaction(`withdraw`, 200, 100),
+            transaction(`deposit`, 500, 600),
+        ]
+        it(`should return the deposit operation made by the user ${alice.getFullName()} `, () => {
+            alice.deposit(100);
+             assert.include(alice.getHistory()[0], aliceHistory[0]);
         });
 
-        it(`should return the withdraw operation made by the user ${user.getFullName()} `, () => {
-            user.withdraw(100);
-            assert.include(user.getHistory()[1], historyToCheck[1]);
+        it(`should return the withdraw operation made by the user ${alice.getFullName()} `, () => {
+            alice.withdraw(100);
+            assert.include(alice.getHistory()[1], aliceHistory[1]);
         });
+
+        it(`user ${alice.getFullName()} can't see the history of ${bob.getFullName()}`, () => {
+            bob.withdraw(200);
+            assert.include(bob.getHistory()[0], bobHistory[0]);
+            assert.notInclude(bob.getHistory()[0], alice.getHistory()[0]);
+        })
 
     })
 })
