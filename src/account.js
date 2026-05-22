@@ -1,4 +1,4 @@
-import {number, string} from './validator.js'
+import {isNumber, isPositive, isString} from './validator.js'
 import {deposit, withdraw} from './transaction.js'
 /**
  * Returns the balance of the user
@@ -38,10 +38,27 @@ function getFullName() {
 function getHistory() {
     return this.transactionHistory;
 }
+
+/**
+ * Function to validate the values
+ * @param name
+ * @param surname
+ * @param balance
+ */
+function validate(name, surname, balance) {
+    if (!isString(name)) {
+        throw new Error(`The name you insert it's not valid`);
+    }
+    if (!isString(surname)) {
+        throw new Error(`The name you insert it's not valid`);
+    }
+    if (!isNumber(balance) || !isPositive(balance)) {
+        throw new Error('Invalid balance');
+    }
+}
+
 export function Account(name, surname, balance) {
-    string(name);
-    string(surname);
-    number(balance);
+    validate(name, surname, balance);
     return {
         name,
         surname,
