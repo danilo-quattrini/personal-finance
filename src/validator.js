@@ -1,30 +1,56 @@
 /**
- * Return a number with fixed decimal approximation, throw an error
- * if the number it is not valid
+ * Check if a number is a positive integer and finite.
  * @param number
- * @returns {string}
+ * @returns {false|true}
  */
-export function number(number) {
-    if(isNaN(number) || number === null || number === undefined) {
-        throw new Error(`Value must be a valid number`);
-    }
-    if(number < 0) {
-        throw new Error(`Number must be a positive integer`);
-    }
-    return number.toFixed(2);
+export function isPositive(number) {
+    return number > -1 && Number.isFinite(number);
+}
+/**
+ * Check if a value is null or undefined.
+ * @param value
+ * @returns {false|true}
+ */
+export function isEmpty(value) {
+    return value === null || value === undefined;
 }
 
 /**
- * Validate if the given value it's a valid string and it's not empty
- * @param value
+ * Check if a number is into a valid format
+ * @param number
+ * @returns {boolean}
  */
-export function string(value) {
-    if(value === null || value === undefined || typeof value !== 'string') {
-        throw new Error(`Value must be a valid string`);
-    }
-    if(value.trim().length === 0) {
-        throw new Error(`The string cannot be empty`);
-    }
+export function isNumber(number) {
+    return ! isEmpty(number) && ! isNaN(number)
+}
+
+/**
+ * Check if a gi
+ * @param value
+ * @param min
+ * @param max
+ * @returns {boolean}
+ */
+export function size(value, min = 0, max = Infinity) {
+    return value.length > min && value.length <= max;
+}
+
+/**
+ * Return a string sanitized
+ * @param str string to sanitize
+ * @returns {string} string sanitized
+ */
+export function sanitizeString(str){
+    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+    return str.trim();
+}
+/**
+ * Validate if the given value it's a valid string and it's not empty
+ * @param string
+ */
+export function isString(string) {
+    const sanitizedString = sanitizeString(string);
+    return ! isEmpty(sanitizedString) && typeof sanitizedString === 'string' && size(sanitizedString);
 }
 
 /**
