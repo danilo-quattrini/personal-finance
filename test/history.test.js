@@ -29,8 +29,8 @@ describe("History operations", () => {
     })
 
     describe("normal cases", () => {
-        const alice = Account(`Alice`, `Mancini`, 100);
-        const bob = Account(`Bob`, `Fernando`, 300);
+        const alice = Account(`Alice`, `Mancini`,'IT24G0326350576WMLFI6LASP06',  100);
+        const bob = Account(`Bob`, `Fernando`, 'IT24G0326350576WMLFI6LASP06', 300);
 
         const aliceHistory = [
             transaction(`deposit`, 100, 200),
