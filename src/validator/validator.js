@@ -64,3 +64,19 @@ export function transactionType(type) {
         throw Error(`Transaction type "${type}" not found.`);
     }
 }
+
+/**
+ * Check if two object are equals or not
+ *
+ * @param {object} obj1 first objet to compare
+ * @param {object} obj2 second object to compare
+ * @return {boolean} true|false
+ */
+
+export function deepEqual(obj1, obj2) {
+    return (obj1 && obj2 && typeof obj1 === 'object' && typeof obj2 === 'object') ?
+        (Object.keys(obj1).length === Object.keys(obj2).length) &&
+        Object.keys(obj1).reduce( function(isEqual, key) {
+            return isEqual && deepEqual(obj1[key], obj2[key]);
+        }, true) : (obj1 === obj2);
+}
