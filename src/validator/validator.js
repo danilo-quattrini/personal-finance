@@ -59,7 +59,7 @@ export function isString(string) {
  * @param type the type of transaction passed to the function
  */
 export function transactionType(type) {
-    const operations = ['withdraw', 'deposit'];
+    const operations = ['withdraw', 'deposit', 'pay', 'earn'];
     if (!operations.includes(type.toLowerCase())) {
         throw Error(`Transaction type "${type}" not found.`);
     }

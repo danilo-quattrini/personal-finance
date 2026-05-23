@@ -1,6 +1,7 @@
 import {isNumber, isPositive, isString} from './validator/validator.js'
-import {deposit, withdraw} from './transaction.js'
+import {deposit, withdraw, pay, earn} from './transaction.js'
 import {isIBAN} from "./validator/isIBAN.js";
+import {transfer} from "./transfer.js";
 /**
  * Returns the balance of the user
  * @returns {number} the balance of the user
@@ -86,5 +87,8 @@ export function Account(name, surname, iban, balance) {
         getHistory,
         deposit,
         withdraw,
+        pay,
+        earn,
+        transfer,
     };
 }

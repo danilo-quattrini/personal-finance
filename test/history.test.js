@@ -35,10 +35,12 @@ describe("History operations", () => {
         const aliceHistory = [
             transaction(`deposit`, 100, 200),
             transaction(`withdraw`, 100, 100),
+            transaction(`pay`, 100, 0),
         ]
         const bobHistory = [
             transaction(`withdraw`, 200, 100),
             transaction(`deposit`, 500, 600),
+            transaction(`earn`, 100, 600),
         ]
         it(`should return the deposit operation made by the user ${alice.getFullName()} `, () => {
             alice.deposit(100);
@@ -49,6 +51,32 @@ describe("History operations", () => {
             alice.withdraw(100);
             assert.include(alice.getHistory()[1], aliceHistory[1]);
         });
+
+        it(`should return the deposit operation made by the user ${bob.getFullName()} `, () => {
+            bob.withdraw(200);
+            assert.include(bob.getHistory()[0], bobHistory[0]);
+        });
+
+        it(`should return the withdraw operation made by the user ${bob.getFullName()} `, () => {
+            bob.deposit(500);
+            assert.include(bob.getHistory()[1], bobHistory[1]);
+        });
+
+        it(`should return the payment operation made by the user ${alice.getFullName()} `, () => {
+            alice.pay(100);
+            const paymentHistory = alice.getHistory()[2];
+            assert.equal(paymentHistory.type, aliceHistory[2].type);
+            assert.equal(paymentHistory.amount, aliceHistory[2].amount);
+            assert.equal(paymentHistory.userBalance, alice.getBalance());
+        });
+
+        it(`should return the earn operation on the user ${bob.getFullName()} `, () => {
+            bob.earn(100);
+            const earnHistory = bob.getHistory()[2];
+            assert.equal(earnHistory.type, bobHistory[2].type);
+            assert.equal(earnHistory.amount, bobHistory[2].amount);
+            assert.equal(earnHistory.userBalance, bob.getBalance());
+        })
 
         it(`user ${alice.getFullName()} can't see the history of ${bob.getFullName()}`, () => {
             bob.withdraw(200);

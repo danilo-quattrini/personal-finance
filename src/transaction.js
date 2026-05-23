@@ -45,3 +45,21 @@ export function deposit(amount) {
 export function withdraw(amount) {
     debit.call(this, amount, `withdraw`);
 }
+
+/**
+ * Pay an amount of money for something
+ *
+ * @param {number} amount
+ */
+export function pay(amount) {
+    debit.call(this, amount, `pay`);
+}
+
+/**
+ * Earn an amount of money for something
+ *
+ * @param {number} amount
+ */
+export function earn(amount) {
+    credit.call(this, amount, `earn`);
+}
