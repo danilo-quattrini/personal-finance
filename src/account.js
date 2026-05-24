@@ -42,7 +42,7 @@ function getIBAN() {
 }
 /**
  * Return an array with all the transactions made by the user.
- * @returns {[]} array with a list of object that represent each transaction
+ * @returns {[]} array with a list of object that represent each operation
  */
 function getHistory() {
     return this.transactionHistory;

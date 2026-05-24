@@ -2,12 +2,12 @@ import {isNumber, isPositive, isString, transactionType} from "./validator/valid
 const id = Symbol("Transaction identifier");
 
 /**
- * Save into an array of history the object of type transaction
+ * Save into an array of history the object of type operation
  * @param history
  * @param element
  */
 export function save(history, element) {
-    history.push(transaction(element.type, element.amount, element.balance));
+    history.push(operation(element.type, element.amount, element.balance, element?.description));
 }
 /**
  * Function to validate the values
@@ -28,12 +28,14 @@ function validate(type, amount, balance) {
 }
 /**
  * Return a history object that track of all the operation made into the account
+ *
  * @param {string} type
  * @param {number} amount
  * @param {number} balance
+ * @param {string| null} description optional description to add at the history operation
  * @returns {{type: *, amount: *, userBalance: *}}
  */
-export function transaction(type, amount, balance) {
+export function operation(type, amount, balance, description = null) {
     validate(type, amount, balance);
     transactionType(type);
     return {
@@ -41,5 +43,6 @@ export function transaction(type, amount, balance) {
         type,
         amount: amount,
         userBalance: balance,
+        description,
     }
 }
