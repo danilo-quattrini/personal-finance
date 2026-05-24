@@ -55,8 +55,9 @@ export function isString(string) {
 }
 
 /**
- * Check if the transaction it's into a valid type
- * @param type the type of transaction passed to the function
+ * Check if the operation it's into a valid type
+ *
+ * @param type the type of operation passed to the function
  */
 export function transactionType(type) {
     const operations = ['withdraw', 'deposit', 'pay', 'earn'];
