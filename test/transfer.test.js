@@ -1,5 +1,5 @@
 import { Account } from "../src/account.js";
-import { assert, expect } from "chai";
+import { assert } from "chai";
 
 describe('Transfer operation', () => {
     describe('error case', () => {
@@ -22,6 +22,7 @@ describe('Transfer operation', () => {
     });
 
     describe('normal case', () => {
+
         describe(`Alice send the money to Bob`, () => {
             let  alice, bob, bobBalanceBeforeTransfer;
             // Runs before each `it()` test
@@ -37,6 +38,14 @@ describe('Transfer operation', () => {
             });
             it(`Bob should have +$100 from previous balance $${bobBalanceBeforeTransfer} to his account`, () => {
                 assert.equal(bob.getBalance(), bobBalanceBeforeTransfer + 100);
+            });
+            it(`Alice should have the transfer saved in the history`, () => {
+                assert.include(alice.getHistory()[0], {
+                    type: 'pay',
+                    amount: 100,
+                    userBalance: 0,
+                    description: `Transfer amount: $100 to Bob Giovi`
+                });
             });
         })
 
@@ -54,10 +63,16 @@ describe('Transfer operation', () => {
                 assert.equal(bob.getBalance(), 100);
             });
             it(`Bob should have +$400 from previous balance $${aliceBalanceBeforeTransfer} to his account`, () => {
-                assert.equal(alice.getBalance(), aliceBalanceBeforeTransfer + 100);
+                assert.equal(alice.getBalance(), aliceBalanceBeforeTransfer + 400);
             });
-            it(`${alice.getName()} should have the transfer saved in the history`);
-            it(`${bob.getName()} should have the transfer saved in the history`);
+            it(`Bob should have the transfer saved in the history`, () => {
+                assert.include(bob.getHistory()[0], {
+                    type: 'pay',
+                    amount: 400,
+                    userBalance: 100,
+                    description: `Transfer amount: $400 to Alice Keller`
+                });
+            });
         });
     })
 })
