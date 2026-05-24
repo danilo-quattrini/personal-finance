@@ -23,6 +23,6 @@ function validate(amount, account) {
  */
 export function transfer(amount, account) {
     validate.call(this, amount, account);
-    this.pay(amount);
+    this.pay(amount, `Transfer amount: $${amount} to ${account?.getFullName()}`);
     account.earn(amount);
 }
