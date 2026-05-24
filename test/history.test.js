@@ -29,57 +29,63 @@ describe("History operations", () => {
     })
 
     describe("normal cases", () => {
-        const alice = Account(`Alice`, `Mancini`,'IT24G0326350576WMLFI6LASP06',  100);
-        const bob = Account(`Bob`, `Fernando`, 'IT24G0326350576WMLFI6LASP06', 300);
+        let alice, bob;
+
+        beforeEach(() => {
+            alice = Account(`Alice`, `Mancini`,'IT24G0326350576WMLFI6LASP06',  100);
+            bob = Account(`Bob`, `Fernando`, 'IT24G0326350576WMLFI6LASP06', 300);
+            alice.deposit(100);
+            alice.withdraw(100);
+            alice.pay(100);
+            bob.withdraw(200);
+            bob.deposit(500);
+            bob.earn(100);
+            bob.withdraw(200);
+        })
 
         const aliceHistory = [
-            transaction(`deposit`, 100, 200),
-            transaction(`withdraw`, 100, 100),
-            transaction(`pay`, 100, 0),
+            operation(`deposit`, 100, 200),
+            operation(`withdraw`, 100, 100),
+            operation(`pay`, 100, 0),
         ]
         const bobHistory = [
-            transaction(`withdraw`, 200, 100),
-            transaction(`deposit`, 500, 600),
-            transaction(`earn`, 100, 600),
+            operation(`withdraw`, 200, 100),
+            operation(`deposit`, 500, 600),
+            operation(`earn`, 100, 700),
         ]
-        it(`should return the deposit operation made by the user ${alice.getFullName()} `, () => {
-            alice.deposit(100);
-             assert.include(alice.getHistory()[0], aliceHistory[0]);
+
+        it(`should return the deposit operation made by the user Alice `, () => {
+            assert.include(alice.getHistory()[0], aliceHistory[0]);
         });
 
-        it(`should return the withdraw operation made by the user ${alice.getFullName()} `, () => {
-            alice.withdraw(100);
+        it(`should return the withdraw operation made by the user Alice `, () => {
             assert.include(alice.getHistory()[1], aliceHistory[1]);
         });
 
-        it(`should return the deposit operation made by the user ${bob.getFullName()} `, () => {
-            bob.withdraw(200);
+        it(`should return the deposit operation made by the user Bob `, () => {
             assert.include(bob.getHistory()[0], bobHistory[0]);
         });
 
-        it(`should return the withdraw operation made by the user ${bob.getFullName()} `, () => {
-            bob.deposit(500);
+        it(`should return the withdraw operation made by the user Bob `, () => {
             assert.include(bob.getHistory()[1], bobHistory[1]);
         });
 
-        it(`should return the payment operation made by the user ${alice.getFullName()} `, () => {
-            alice.pay(100);
+        it(`should return the payment operation made by the user Alice `, () => {
             const paymentHistory = alice.getHistory()[2];
             assert.equal(paymentHistory.type, aliceHistory[2].type);
             assert.equal(paymentHistory.amount, aliceHistory[2].amount);
             assert.equal(paymentHistory.userBalance, alice.getBalance());
         });
 
-        it(`should return the earn operation on the user ${bob.getFullName()} `, () => {
-            bob.earn(100);
+        it(`should return the earn operation on the user Bob `, () => {
             const earnHistory = bob.getHistory()[2];
+            console.log(bob.getHistory());
             assert.equal(earnHistory.type, bobHistory[2].type);
             assert.equal(earnHistory.amount, bobHistory[2].amount);
-            assert.equal(earnHistory.userBalance, bob.getBalance());
+            assert.equal(earnHistory.userBalance, bobHistory[2].userBalance);
         })
 
-        it(`user ${alice.getFullName()} can't see the history of ${bob.getFullName()}`, () => {
-            bob.withdraw(200);
+        it(`Alice can't see the history of Bob`, () => {
             assert.include(bob.getHistory()[0], bobHistory[0]);
             assert.notInclude(bob.getHistory()[0], alice.getHistory()[0]);
         })
