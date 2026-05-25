@@ -44,6 +44,7 @@ export function operation(type, amount, balance, description = null) {
         amount: amount,
         userBalance: balance,
         description,
+        date: new Date().toLocaleString(),
     }
 }
 
