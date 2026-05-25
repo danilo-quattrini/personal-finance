@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import { isIBAN } from "../src/validator/isIBAN.js";
+import {generateIBAN} from "../src/IBANgenerator.js";
 
 describe('IBAN validation', () => {
     describe('error cases', () => {
