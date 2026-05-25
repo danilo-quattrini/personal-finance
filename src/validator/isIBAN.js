@@ -139,9 +139,8 @@ export function validateCountryCode(countryCode) {
 function hasValidIbanFormat(str) {
     // Strip white spaces and hyphens
     const strippedStr = str.replace(/[\s\-]+/gi, '').toUpperCase();
-    const isoCountryCode = strippedStr.slice(0, 2);
-    const isoCountryCodeInIbanRegexCodeObject = validateCountryCode(isoCountryCode);
-    return isoCountryCodeInIbanRegexCodeObject &&
+    const isoCountryCode = strippedStr.slice(0, 2).toUpperCase();
+    return validateCountryCode(isoCountryCode) &&
             ibanRegexThroughCountryCode[isoCountryCode].test(strippedStr);
 }
 
