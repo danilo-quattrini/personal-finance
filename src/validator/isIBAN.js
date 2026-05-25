@@ -1,4 +1,4 @@
-import {isEmpty} from "./validator.js";
+import {isEmpty, isString} from "./validator.js";
 
 /**
  * List of country codes with
@@ -89,18 +89,19 @@ const ibanRegexThroughCountryCode = {
 };
 
 /**
- * Check if the country codes passed are valid using the
+ * Check if a given country code string is valid using the
  * ibanRegexThroughCountryCode as a reference
  *
- * @param {array} countryCodeArray
+ * @param {string} countryCode
  * @return {boolean}
  */
 
-function hasOnlyValidCountryCodes(countryCodeArray) {
-    const countryCodeArrayFilteredWithObjectIbanCode = countryCodeArray.filter(function (countryCode) {
-        return !(countryCode in ibanRegexThroughCountryCode);
-    });
-    return countryCodeArrayFilteredWithObjectIbanCode.length === 0;
+export function validateCountryCode(countryCode) {
+    if(! isString(countryCode)) {
+        throw new Error(`IBAN country code is mandatory!`)
+    }
+    countryCode = countryCode.toUpperCase();
+    return countryCode in ibanRegexThroughCountryCode;
 }
 
 /**
@@ -117,8 +118,8 @@ function hasOnlyValidCountryCodes(countryCodeArray) {
 function hasValidIbanFormat(str) {
     // Strip white spaces and hyphens
     const strippedStr = str.replace(/[\s\-]+/gi, '').toUpperCase();
-    const isoCountryCode = strippedStr.slice(0, 2).toUpperCase();
-    const isoCountryCodeInIbanRegexCodeObject = isoCountryCode in ibanRegexThroughCountryCode;
+    const isoCountryCode = strippedStr.slice(0, 2);
+    const isoCountryCodeInIbanRegexCodeObject = validateCountryCode(isoCountryCode);
     return isoCountryCodeInIbanRegexCodeObject &&
             ibanRegexThroughCountryCode[isoCountryCode].test(strippedStr);
 }
