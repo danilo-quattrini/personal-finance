@@ -32,18 +32,11 @@ describe('IBAN Generator', () => {
     describe('error cases', () => {
         it('should throw an error if the IBAN country code is not given', () => {
             const countryCode = "";
-            const accountNumber = "13413";
-            assert.throws(() => generateIBAN(countryCode, accountNumber), Error, `IBAN country code is mandatory!`)
+            assert.throws(() => generateIBAN(countryCode), Error, `IBAN country code is mandatory!`)
         });
         it('should throw an error if the IBAN country code is wrong',() => {
             const countryCode = "XYZ";
-            const accountNumber = "13413";
-            assert.throws(() => generateIBAN(countryCode, accountNumber), Error, `IBAN country code does not exist!`)
-        });
-        it('should throw an error if the account number is empty',() => {
-            const countryCode = "IT";
-            const accountNumber = "";
-            assert.throws(() => generateIBAN(countryCode, accountNumber), Error, `Account number is mandatory!`)
+            assert.throws(() => generateIBAN(countryCode), Error, `IBAN country code does not exist!`)
         });
     })
 })
