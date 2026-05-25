@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 import {Account} from "../src/account.js";
-import {operation} from "../src/history.js";
+import {getAllHistoryByType, operation} from "../src/history.js";
 
 describe("History operations", () => {
 
@@ -79,7 +79,6 @@ describe("History operations", () => {
 
         it(`should return the earn operation on the user Bob `, () => {
             const earnHistory = bob.getHistory()[2];
-            console.log(bob.getHistory());
             assert.equal(earnHistory.type, bobHistory[2].type);
             assert.equal(earnHistory.amount, bobHistory[2].amount);
             assert.equal(earnHistory.userBalance, bobHistory[2].userBalance);
@@ -90,5 +89,41 @@ describe("History operations", () => {
             assert.notInclude(bob.getHistory()[0], alice.getHistory()[0]);
         })
 
+        describe('filter operation', () => {
+            it('should throw an error if the type to filter it\'s empty', () => {
+                assert.throw( () => getAllHistoryByType(bob,null), Error)
+                assert.throw( () => getAllHistoryByType(bob,undefined), Error)
+                assert.throw( () => getAllHistoryByType(bob,``), Error)
+            })
+            it('should return all the withdraw operation made by Bob', () => {
+                const result = getAllHistoryByType(bob, `withdraw`);
+
+                const expected = [
+                    { type: `withdraw`, amount: 200, userBalance: 100, description: null },
+                    { type: `withdraw`, amount: 200, userBalance: 500, description: null },
+                ];
+
+                expected.forEach((expectedItem, index) => {
+                    assert.include(result[index], expectedItem);
+                })
+            });
+            it('should return all the deposit operation made by Bob', () => {
+                const result = getAllHistoryByType(bob, `deposit`);
+                const expected = [
+                    { type: `deposit`, amount: 500, userBalance: 600, description: null },
+                ];
+                expected.forEach((expectedItem, index) => {
+                    assert.include(result[index], expectedItem);
+                })
+            });
+            it('should return an empty array for payment operation made by Bob', () => {
+                const result = getAllHistoryByType(bob, `pay`);
+                assert.isEmpty(result);
+            });
+           it('should not return any earn operation made by Alice', async () => {
+                const result = getAllHistoryByType(alice, `earn`);
+                assert.isEmpty(result);
+            });
+        })
     })
 })
