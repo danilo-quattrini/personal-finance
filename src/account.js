@@ -61,7 +61,7 @@ function validate(name, surname, iban, balance) {
         throw new Error(`The name you insert it's not valid`);
     }
     if (!isString(surname)) {
-        throw new Error(`The name you insert it's not valid`);
+        throw new Error(`The surname you insert it's not valid`);
     }
     if(!isIBAN(iban)) {
         throw new Error(`The IBAN you insert it's not a valid format`);
@@ -70,6 +70,25 @@ function validate(name, surname, iban, balance) {
         throw new Error('Invalid balance');
     }
 }
+/**
+ * Async function that return an account object from user input.
+ *
+ * @param {function} ask
+ * @returns a new account object
+ */
+export async function createAccount(ask){
+    try {
+        const name = await ask(`Write your name => `);
+        const surname = await ask(`Write your surname => `);
+        const balance = await ask(`Insert an initial balance for your account => `);
+        const iban = `IT60X0542811101000000123456`
+
+        return Account(name, surname, iban, +balance);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
 
 export function Account(name, surname, iban, balance) {
     validate(name, surname, iban, balance);

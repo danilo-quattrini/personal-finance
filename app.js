@@ -1,7 +1,9 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
+import { createAccount } from "./src/account.js";
 
 const rl = readline.createInterface({ input, output });
+const bank = [];
 
 async function ask(question) {
     return await rl.question(question);
@@ -24,6 +26,7 @@ async function mainMenu() {
 
     switch (choice.trim()) {
         case "1":
+            bank.push(await createAccount(ask));
             break;
         case "2":
             break;
