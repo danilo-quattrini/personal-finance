@@ -1,6 +1,18 @@
 import {isEmpty, isString} from "./validator.js";
 
 /**
+ * List of country Iban minimum length
+ *
+ * @type {{IT: number, DE: number, FR: number, GB: number}}
+ */
+const ibanLength = {
+    IT: 23,
+    DE: 18,
+    FR: 23,
+    GB: 18,
+}
+
+/**
  * List of country codes with
  * corresponding IBAN regular expression
  * Reference: https://en.wikipedia.org/wiki/International_Bank_Account_Number
@@ -87,6 +99,15 @@ const ibanRegexThroughCountryCode = {
     VG: /^(VG[0-9]{2})[A-Z]{4}\d{16}$/,
     XK: /^(XK[0-9]{2})\d{16}$/
 };
+
+/**
+ * Get the length of the expected iban from the country code
+ * @param countryCode
+ * @returns {number}
+ */
+export function getExpectedLength(countryCode) {
+    return ibanLength[countryCode.toUpperCase()];
+}
 
 /**
  * Check if a given country code string is valid using the
