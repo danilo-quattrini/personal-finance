@@ -1,4 +1,4 @@
-import {validateCountryCode} from "./validator/isIBAN.js";
+import {getExpectedLength, validateCountryCode} from "./validator/isIBAN.js";
 import {isString} from "./validator/validator.js";
 
 function validate(countryCode, accountNumber) {
@@ -7,6 +7,12 @@ function validate(countryCode, accountNumber) {
     }
     if (! isString(accountNumber)) {
         throw new Error(`Account number is mandatory!`)
+    }
+    if (accountNumber.length !== getExpectedLength(countryCode)) {
+        throw new Error(
+            `Account number for ${countryCode} must be exactly 
+            ${getExpectedLength(countryCode)} characters`
+        );
     }
 }
 
