@@ -46,3 +46,17 @@ export function operation(type, amount, balance, description = null) {
         description,
     }
 }
+
+/**
+ * Find all the operation inside the history by type.
+ *
+ * @param account - the account to get the history type we wants
+ * @param {string} type - type of operation to find in the history.
+ */
+
+export function getAllHistoryByType(account, type){
+    if(!isString(type)){
+        throw new Error(`The type must be valid string`);
+    }
+    return account.getHistory().filter((record) => record.type === type);
+}
