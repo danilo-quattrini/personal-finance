@@ -20,4 +20,19 @@ describe('Random string generation', () => {
             assert.throws(() => generateRandomString('digits', 0), Error, `The length of the string to generate should be more than 0`);
         })
     })
+
+    describe('normal cases', () => {
+        it('should return a random number string with only 5 digits', () => {
+            assert.isNotEmpty(generateRandomString('digits', 5).match(/\b[0-9]{5}\b/g))
+        })
+        it('should return a random letters string with only 5 digits', () => {
+            assert.isNotEmpty(generateRandomString('letters', 5).match(/\b[A-Z]{5}\b/g))
+        })
+        it('should not return a random letters string with only 5 digits', () => {
+            assert.isNull(generateRandomString('mixed', 5).match(/\b[A-Z]{5}\b/g))
+        })
+        it('should return a random letters + number string with only 5 digits', () => {
+            assert.isNotNull(generateRandomString('mixed', 5).match(/\b[A-Z0-9]{5}\b/g))
+        })
+    })
 })
