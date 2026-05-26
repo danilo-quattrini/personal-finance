@@ -9,7 +9,7 @@ async function ask(question) {
     return await rl.question(question);
 }
 
-async function mainMenu() {
+export async function mainMenu(ask) {
     console.log(`
             =============================
                 Personal Finance CLI
@@ -37,14 +37,28 @@ async function mainMenu() {
         case "5":
             break;
         case "6":
-            console.log(`Goodbye!`);
-            rl.close();
-            return ;
+            return 'exit';
         default:
-            console.log(`The choice you wrote it's incorrect: ${choice}`);
+            console.log(`✗  The choice you wrote it's incorrect: ${choice}`)
+            return `The choice you wrote it's incorrect: ${choice}`;
     }
-
-    await mainMenu();
 }
 
-mainMenu();
+/**
+ * Function that runs forever until the user is going to
+ * select the proper choice to exit from the loop;
+ *
+ * @returns {Promise<void>}
+ */
+async function run() {
+    while(true) {
+        const result = await mainMenu(ask);
+        if(result === 'exit') {
+            console.log(`Goodbye!`);
+            rl.close();
+            break;
+        }
+    }
+}
+
+run();
