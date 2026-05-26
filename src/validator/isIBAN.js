@@ -101,6 +101,43 @@ const ibanRegexThroughCountryCode = {
 };
 
 /**
+ * Phase of the checksum move the first four digit to the end
+ * of the account number.
+ *
+ * @param iban - where to take the first 4 digits
+ * @returns {string}
+ */
+export function rearrange(iban) {
+    return iban.slice(4) + iban.slice(0, 4);
+}
+
+/**
+ * Phase of the checksum where replace each lettere from A to Z
+ * to the account number into ASCII and remove the value of 55 to match
+ * the required pattern:.
+ *
+ * A => 10, B => 11, ecc...;
+ *
+ * @param str - where to take the first 4 digits
+ * @returns {string}
+ */
+export function lettersToNumbers(str) {
+    return str.replace(/[A-Z]/g, (char) => char.charCodeAt(0) - 55);
+}
+
+/**
+ * Compute the reminder with module 97
+ *
+ * @param numericString
+ * @returns {number}
+ */
+export function mod97(numericString) {
+    return numericString
+        .match(/\d{1,7}/g)
+        .reduce((acc, chunk) => Number(acc + chunk) % 97, '');
+}
+
+/**
  * Get the length of the expected iban from the country code
  * @param countryCode
  * @returns {number}
@@ -159,13 +196,9 @@ function hasValidIbanFormat(str) {
  */
 function hasValidIbanChecksum(str) {
     const strippedStr = str.replace(/[^A-Z0-9]+/gi, '').toUpperCase(); // Keep only digits and A-Z latin alphabetic
-    const rearranged = strippedStr.slice(4) + strippedStr.slice(0, 4);
-    const alphaCapsReplacedWithDigits = rearranged.replace(/[A-Z]/g, function (char) {
-        return char.charCodeAt(0) - 55;
-    });
-    const remainder = alphaCapsReplacedWithDigits.match(/\d{1,7}/g).reduce(function (acc, value) {
-        return Number(acc + value) % 97;
-    }, '');
+    const rearranged = rearrange(strippedStr);
+    const alphaCapsReplacedWithDigits = lettersToNumbers(rearranged);
+    const remainder = mod97(alphaCapsReplacedWithDigits)
     return remainder === 1;
 }
 export function isIBAN(str) {
