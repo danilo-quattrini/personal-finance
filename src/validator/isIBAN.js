@@ -1,16 +1,93 @@
 import {isEmpty, isString} from "./validator.js";
 
 /**
- * List of country Iban minimum length
+ * List of country Iban minimum account number (BBAN) lengths
+ * dynamically extracted from the provided regex definitions.
  *
- * @type {{IT: number, DE: number, FR: number, GB: number}}
+ * @type {Object.<string, number>}
  */
 const ibanLength = {
-    IT: 23,
-    DE: 18,
-    FR: 23,
-    GB: 18,
-}
+    AD: 20, // \d{8} + [A-Z0-9]{12}
+    AE: 19, // \d{3} + \d{16}
+    AL: 24, // \d{8} + [A-Z0-9]{16}
+    AT: 16, // \d{16}
+    AZ: 24, // [A-Z0-9]{4} + \d{20}
+    BA: 16, // \d{16}
+    BE: 12, // \d{12}
+    BG: 18, // [A-Z]{4} + \d{6} + [A-Z0-9]{8}
+    BH: 18, // [A-Z]{4} + [A-Z0-9]{14}
+    BR: 25, // \d{23} + [A-Z]{1} + [A-Z0-9]{1}
+    BY: 24, // [A-Z0-9]{4} + \d{20}
+    CH: 17, // \d{5} + [A-Z0-9]{12}
+    CR: 18, // \d{18}
+    CY: 24, // \d{8} + [A-Z0-9]{16}
+    CZ: 20, // \d{20}
+    DE: 18, // \d{18}
+    DK: 14, // \d{14}
+    DO: 24, // [A-Z]{4} + \d{20}
+    DZ: 24, // Entire IBAN is 26 chars minus 2 for country code (DZ)
+    EE: 16, // \d{16}
+    EG: 25, // \d{25}
+    ES: 20, // \d{20}
+    FI: 14, // \d{14}
+    FO: 14, // \d{14}
+    FR: 23, // \d{10} + [A-Z0-9]{11} + \d{2}
+    GB: 18, // [A-Z]{4} + \d{14}
+    GE: 18, // [A-Z0-9]{2} + \d{16}
+    GI: 19, // [A-Z]{4} + [A-Z0-9]{15}
+    GL: 14, // \d{14}
+    GR: 23, // \d{7} + [A-Z0-9]{16}
+    GT: 24, // [A-Z0-9]{4} + [A-Z0-9]{20}
+    HR: 17, // \d{17}
+    HU: 24, // \d{24}
+    IE: 18, // [A-Z]{4} + \d{14}
+    IL: 19, // \d{19}
+    IQ: 19, // [A-Z]{4} + \d{15}
+    IR: 22, // \d{22}
+    IS: 22, // \d{22}
+    IT: 23, // [A-Z]{1} + \d{10} + [A-Z0-9]{12}
+    JO: 26, // [A-Z]{4} + \d{22}
+    KW: 26, // [A-Z]{4} + [A-Z0-9]{22}
+    KZ: 16, // \d{3} + [A-Z0-9]{13}
+    LB: 24, // \d{4} + [A-Z0-9]{20}
+    LC: 28, // [A-Z]{4} + [A-Z0-9]{24}
+    LI: 17, // \d{5} + [A-Z0-9]{12}
+    LT: 16, // \d{16}
+    LU: 16, // \d{3} + [A-Z0-9]{13}
+    LV: 17, // [A-Z]{4} + [A-Z0-9]{13}
+    MA: 26, // Entire IBAN is 28 chars minus 2 for country code (MA)
+    MC: 23, // \d{10} + [A-Z0-9]{11} + \d{2}
+    MD: 20, // [A-Z0-9]{20}
+    ME: 18, // \d{18}
+    MK: 15, // \d{3} + [A-Z0-9]{10} + \d{2}
+    MR: 23, // \d{23}
+    MT: 27, // [A-Z]{4} + \d{5} + [A-Z0-9]{18}
+    MU: 26, // [A-Z]{4} + \d{19} + [A-Z]{3}
+    MZ: 21, // \d{21}
+    NL: 14, // [A-Z]{4} + \d{10}
+    NO: 11, // \d{11}
+    PK: 20, // [A-Z0-9]{4} + \d{16}
+    PL: 24, // \d{24}
+    PS: 25, // [A-Z]{4} + [A-Z0-9]{21}
+    PT: 21, // \d{21}
+    QA: 25, // [A-Z]{4} + [A-Z0-9]{21}
+    RO: 20, // [A-Z]{4} + [A-Z0-9]{16}
+    RS: 18, // \d{18}
+    SA: 20, // \d{2} + [A-Z0-9]{18}
+    SC: 27, // [A-Z]{4} + \d{20} + [A-Z]{3}
+    SE: 20, // \d{20}
+    SI: 15, // \d{15}
+    SK: 20, // \d{20}
+    SM: 23, // [A-Z]{1} + \d{10} + [A-Z0-9]{12}
+    SV: 24, // [A-Z0-9]{4} + \d{20}
+    TL: 19, // \d{19}
+    TN: 20, // \d{20}
+    TR: 22, // \d{5} + [A-Z0-9]{17}
+    UA: 25, // \d{6} + [A-Z0-9]{19}
+    VA: 18, // \d{18}
+    VG: 20, // [A-Z]{4} + \d{16}
+    XK: 16  // \d{16}
+};
 
 /**
  * List of country codes with
