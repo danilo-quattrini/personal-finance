@@ -1,7 +1,8 @@
 import {isNumber, isPositive, isString} from './validator/validator.js'
 import {deposit, withdraw, pay, earn} from './transaction.js'
-import {isIBAN} from "./validator/isIBAN.js";
-import {transfer} from "./transfer.js";
+import { isIBAN } from "./validator/isIBAN.js";
+import { transfer } from "./transfer.js";
+import { generateIBAN } from "./factories/IBANgenerator.js";
 /**
  * Returns the balance of the user
  * @returns {number} the balance of the user
@@ -81,10 +82,13 @@ export async function createAccount(ask){
         const name = await ask(`Write your name => `);
         const surname = await ask(`Write your surname => `);
         const balance = await ask(`Insert an initial balance for your account => `);
-        const iban = `IT60X0542811101000000123456`
+        const countryCode = await ask(`Insert your country code \n(IT = Italy, GB = Great Britain, FR = France, ecc..) => `);
+        const iban = generateIBAN(countryCode);
 
+        if(iban) console.log(`✔ IBAN generated successfully: ${iban}`)
         return Account(name, surname, iban, +balance);
     } catch(err) {
+        console.log(`✗ Something went wrong while creating account: ${err.message}`);
         console.log(err);
     }
 }
