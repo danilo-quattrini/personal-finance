@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { isIBAN } from "../src/validator/isIBAN.js";
-import {generateIBAN} from "../src/IBANgenerator.js";
+import { generateIBAN } from "../src/factories/IBANgenerator.js";
 
 describe('IBAN validation', () => {
     describe('error cases', () => {
@@ -43,36 +43,31 @@ describe('IBAN Generator', () => {
     describe('normal cases', () => {
         it('should generate a valid Iban number for Italy', () => {
             const countryCode = "IT";
-            const accountNumber = generateAccountNumber(countryCode);
-            const iban = generateIBAN(accountNumber);
+            const iban = generateIBAN(countryCode);
             assert.isTrue(isIBAN(iban));
         });
 
         it('should generate a valid Iban number for France', () => {
             const countryCode = "FR";
-            const accountNumber = generateAccountNumber(countryCode);
-            const iban = generateIBAN(accountNumber);
+            const iban = generateIBAN(countryCode);
             assert.isTrue(isIBAN(iban));
         });
 
         it('should generate a valid Iban number for Germany', () => {
             const countryCode = "DE";
-            const accountNumber = generateAccountNumber(countryCode);
-            const iban = generateIBAN(accountNumber);
+            const iban = generateIBAN(countryCode);
             assert.isTrue(isIBAN(iban));
         });
 
         it('should generate a valid Iban number for Great Britain', () => {
             const countryCode = "GB";
-            const accountNumber = generateAccountNumber(countryCode);
-            const iban = generateIBAN(accountNumber);
+            const iban = generateIBAN(countryCode);
             assert.isTrue(isIBAN(iban));
         });
 
         it('should generate a valid Iban number for other country', () => {
             const countryCode = "CZ";
-            const accountNumber = generateAccountNumber(countryCode);
-            const iban = generateIBAN(accountNumber);
+            const iban = generateIBAN(countryCode);
             assert.isTrue(isIBAN(iban));
         });
     })
