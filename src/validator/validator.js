@@ -16,6 +16,16 @@ export function isEmpty(value) {
 }
 
 /**
+ * Check if an array is empty, meaning the length of it
+ * is 0
+ * 
+ * @param {array} array array to check if is empty or not
+ */
+export function isArrayEmpty(array) {
+    return array.length === 0;
+}
+
+/**
  * Check if a number is into a valid format
  * @param number
  * @returns {boolean}
