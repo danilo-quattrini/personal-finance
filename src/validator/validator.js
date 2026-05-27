@@ -66,7 +66,6 @@ export function transactionType(type) {
  * @param {object} obj2 second object to compare
  * @return {boolean} true|false
  */
-
 export function deepEqual(obj1, obj2) {
     return (obj1 && obj2 && typeof obj1 === 'object' && typeof obj2 === 'object') ?
         (Object.keys(obj1).length === Object.keys(obj2).length) &&
