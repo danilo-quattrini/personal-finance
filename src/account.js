@@ -4,6 +4,7 @@ import {deposit, withdraw, pay, earn} from './transaction.js'
 import { isIBAN } from "./validator/isIBAN.js";
 import { transfer } from "./transfer.js";
 import { generateIBAN } from "./factories/IBANgenerator.js";
+import { log, message } from "./logger.js";
 /**
  * Returns the balance of the user
  * @returns {number} the balance of the user
@@ -65,7 +66,7 @@ function validate(name, surname, iban, balance) {
     if (! isString(surname) || ! size(surname, 5 , 255)) {
         throw new Error(`The surname you insert it's not valid string \n(min: 6 characters long max: 255)`);
     }
-    if(!isIBAN(iban)) {
+    if (!isIBAN(iban)) {
         throw new Error(`The IBAN you insert it's not a valid format`);
     }
     if (!isNumber(balance) || !isPositive(balance)) {
@@ -87,11 +88,11 @@ export async function createAccount(ask){
         const iban = generateIBAN(countryCode);
         validate(name, surname, iban, Number(balance));
 
-        if(iban) console.log(`✔ IBAN generated successfully: ${iban}`)
-        return Account(name, surname, iban, +balance);
+        if (iban) log.success(`IBAN generated successfully: ${iban}`)
+        return Account(name, surname, iban, Number(balance));
     } catch(err) {
-        console.log(`✗ Something went wrong while creating account: ${err.message}`);
-        console.log(err);
+        log.error(`Something went wrong while creating your account`);
+        message.error(err.message);
     }
 }
 
