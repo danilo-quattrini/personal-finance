@@ -27,11 +27,12 @@ export function isArrayEmpty(array) {
 
 /**
  * Check if a number is into a valid format
+ *
  * @param number
  * @returns {boolean}
  */
 export function isNumber(number) {
-    return ! isEmpty(number) && ! isNaN(number)
+    return ! isEmpty(number) && typeof number === 'number';
 }
 
 /**
