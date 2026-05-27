@@ -8,21 +8,12 @@ export function isPositive(number) {
 }
 /**
  * Check if a value is null or undefined.
+ *
  * @param value
  * @returns {false|true}
  */
 export function isEmpty(value) {
-    return value === null || value === undefined;
-}
-
-/**
- * Check if an array is empty, meaning the length of it
- * is 0
- * 
- * @param {array} array array to check if is empty or not
- */
-export function isArrayEmpty(array) {
-    return array.length === 0;
+    return value === null || value === undefined || value?.length === 0;
 }
 
 /**
