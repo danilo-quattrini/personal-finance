@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 import {Account} from "../src/account.js";
-import {getAllHistoryByType, operation} from "../src/history.js";
+import {clearHistory, getAllHistoryByType, getLastOperation, operation} from "../src/history.js";
 
 describe("History operations", () => {
 
