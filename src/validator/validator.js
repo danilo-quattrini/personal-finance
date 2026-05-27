@@ -39,16 +39,6 @@ export function size(value, min = 0, max = Infinity) {
 }
 
 /**
- * Return a string sanitized
- *
- * @param str string to sanitize
- * @returns {string} string sanitized
- */
-export function sanitizeString(str){
-    str = str.replace(/[^a-z0-9áéíóúñü]/gim,"");
-    return str.trim();
-}
-/**
  * Validate if the given value it's a valid string and it's not empty
  *
  * @param string
