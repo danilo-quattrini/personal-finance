@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import { isEmpty, isNumber, isPositive, size } from "../src/validator/validator.js";
+import { isAccount, isEmpty, isNumber, isPositive, size } from "../src/validator/validator.js";
 describe(`Validator`, () => {
     describe(`Numbers`, () => {
         it(`should return false if the isNumber has empty value`, () => {
@@ -50,6 +50,29 @@ describe(`Validator`, () => {
         it(`should return false if the string is greater than 100`, () => {
             let longString = 'DaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDaniloDanilo';
             assert.isFalse(size(longString, 5,100));
+        })
+    })
+
+    describe(`Account`, () => {
+        it(`should return false if the account is not an object (string)`, () => {
+            const account = `Danilo Quattrini`
+            assert.isFalse(isAccount(account));
+        })
+        it(`should return false if the account is not an object (number)`, () => {
+            const account = 1
+            assert.isFalse(isAccount(account));
+        })
+        it(`should return false if the account is not an object (boolean)`, () => {
+            const account = false
+            assert.isFalse(isAccount(account));
+        })
+        it(`should return false if the account is an object but doesn't have the same keys`, () => {
+            const account = {}
+            assert.isFalse(isAccount(account));
+        })
+        it(`should return false if the account is faked without the right keys`, () => {
+            const account = { name: `Malicious`, surname: `User`, iban:`IT60 X054 2811 1010 0000 0123 456`, balance:1000 };
+            assert.isFalse(isAccount(account));
         })
     })
 })
