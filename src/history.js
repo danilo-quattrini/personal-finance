@@ -61,3 +61,33 @@ export function getAllHistoryByType(account, type){
     }
     return account.getHistory().filter((record) => record.type === type);
 }
+
+/**
+ * Get the recent / last operation made by the user in the history
+ *
+ * @param {object} account - account of the user to get the last history element
+ * @return {object} the last element in the history
+ */
+export function getLastOperation(account) {
+    if(isArrayEmpty(account.getHistory())) {
+        throw  new Error(`You didn't made any operation yet!`);
+    }
+    const historyLength = account.getHistory().length;
+    return account.getHistory()[historyLength - 1];
+}
+
+/**
+ * Clear all the history from a user
+ *
+ * @param {object} account - account of the user to clean the history
+ */
+export function clearHistory(account) {
+    if(isEmpty(account)) {
+        throw  new Error(`Can clear the history, no account has been declared`);
+    }
+    const accountHistory = account.getHistory();
+    if(isArrayEmpty(accountHistory)) {
+        throw  new Error(`Can't clear the history, no operation has been made`);
+    }
+    accountHistory.splice(0);
+}
