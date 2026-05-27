@@ -1,6 +1,8 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { createAccount } from "./src/account.js";
+import { log } from "./src/logger.js";
+import { isEmpty } from "./src/validator/validator.js";
 
 const rl = readline.createInterface({ input, output });
 const bank = [];
@@ -11,35 +13,27 @@ async function ask(question) {
 
 export async function mainMenu(ask) {
     console.log(`
-            =============================
-                Personal Finance CLI
-            =============================
-            1. Create account
-            2. Deposit
-            3. Withdraw
-            4. Transfer
-            5. View history
-            6. Exit
+=============================
+    Personal Finance CLI
+=============================\n
+1: Create account ${! isEmpty(bank) ? `\n2: Choose an account` : `` }
+q: Quit
     `);
 
     const choice = await ask(`Choose an option => `);
 
-    switch (choice.trim()) {
-        case "1":
-            bank.push(await createAccount(ask));
+    switch (choice.trim().toLowerCase()) {
+        case "1": {
+            const account = await createAccount(ask)
+            if (account) {
+                bank.push(account);
+            }
             break;
-        case "2":
-            break;
-        case "3":
-            break;
-        case "4":
-            break;
-        case "5":
-            break;
-        case "6":
+        }
+        case "q":
             return 'exit';
         default:
-            console.log(`✗  The choice you wrote it's incorrect: ${choice}`)
+            log.error(`The choice you wrote it's incorrect: ${choice}`);
             return `The choice you wrote it's incorrect: ${choice}`;
     }
 }

@@ -1,4 +1,4 @@
-import {isEmpty, isNumber, isPositive, isString, transactionType} from "./validator/validator.js";
+import { isEmpty, isNumber, isPositive, isString, transactionType } from "./validator/validator.js";
 const id = Symbol("Transaction identifier");
 
 /**
