@@ -1,4 +1,4 @@
-import {isArrayEmpty, isEmpty, isNumber, isPositive, isString, transactionType} from "./validator/validator.js";
+import {isEmpty, isNumber, isPositive, isString, transactionType} from "./validator/validator.js";
 const id = Symbol("Transaction identifier");
 
 /**
@@ -54,7 +54,6 @@ export function operation(type, amount, balance, description = null) {
  * @param account - the account to get the history type we wants
  * @param {string} type - type of operation to find in the history.
  */
-
 export function getAllHistoryByType(account, type){
     if(!isString(type)){
         throw new Error(`The type must be valid string`);
@@ -69,7 +68,7 @@ export function getAllHistoryByType(account, type){
  * @return {object} the last element in the history
  */
 export function getLastOperation(account) {
-    if(isArrayEmpty(account.getHistory())) {
+    if(isEmpty(account.getHistory())) {
         throw  new Error(`You didn't made any operation yet!`);
     }
     const historyLength = account.getHistory().length;
@@ -86,7 +85,7 @@ export function clearHistory(account) {
         throw  new Error(`Can clear the history, no account has been declared`);
     }
     const accountHistory = account.getHistory();
-    if(isArrayEmpty(accountHistory)) {
+    if(isEmpty(accountHistory)) {
         throw  new Error(`Can't clear the history, no operation has been made`);
     }
     accountHistory.splice(0);
