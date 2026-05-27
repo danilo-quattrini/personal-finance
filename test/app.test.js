@@ -13,7 +13,7 @@ describe(`App CLI`, () => {
 
     describe(`normal cases`, () => {
         it(`should just terminate the process normally with 6`, async () => {
-            const userInput = async () => '6';
+            const userInput = async () => 'q';
             assert.doesNotThrow(() => mainMenu(userInput));
         })
     });

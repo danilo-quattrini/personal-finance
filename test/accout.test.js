@@ -10,20 +10,30 @@ describe('Account', () => {
         });
 
         describe('name & surname', () => {
-            it('should throw if the name it\'s not inserted in the creation process', () => {
-                assert.throws(() => Account(null , `Quattrini`,`IT60 X054 2811 1010 0000 0123 456`,100), Error);
-            });
-            it('should throw if the surname it\'s not inserted in the creation process', () => {
-                assert.throws(() => Account(`Danilo`, null, `IT60 X054 2811 1010 0000 0123 456`, 100), Error);
-            });
-            it('should throw and error if the name and surname strings are empty', () => {
-                assert.throws(() => Account(`  `,`  `, `IT60 X054 2811 1010 0000 0123 456`,  100), Error);
+            describe(`empty states`, () => {
+                it('should throw if the name it\'s not inserted in the creation process', () => {
+                    assert.throws(() => Account(null , `Quattrini`,`IT60 X054 2811 1010 0000 0123 456`,100), Error);
+                });
+                it('should throw if the surname it\'s not inserted in the creation process', () => {
+                    assert.throws(() => Account(`Danilo`, null, `IT60 X054 2811 1010 0000 0123 456`, 100), Error);
+                });
+                it('should throw and error if the name and surname strings are empty', () => {
+                    assert.throws(() => Account(`  `,`  `, `IT60 X054 2811 1010 0000 0123 456`,  100), Error);
+                })
+                it('should throw an error if the name is empty, but the surname is filled', () => {
+                    assert.throws(() => Account(`  `,` Doe `, `IT60 X054 2811 1010 0000 0123 456`, 100), Error);
+                })
+                it('should throw an error if the surname is empty, but the name is filled', () => {
+                    assert.throws(() => Account(` John `,`  `, `IT60 X054 2811 1010 0000 0123 456`,100), Error);
+                })
             })
-            it('should throw an error if the name is empty, but the surname is filled', () => {
-                assert.throws(() => Account(`  `,` Doe `, `IT60 X054 2811 1010 0000 0123 456`, 100), Error);
-            })
-            it('should throw an error if the surname is empty, but the name is filled', () => {
-                assert.throws(() => Account(` John `,`  `, `IT60 X054 2811 1010 0000 0123 456`,100), Error);
+            describe(`size states`, () => {
+                it('should throw an error if the name is less than 5 characters', () => {
+                    assert.throws(() => Account(` John `, ` Doe `, `IT60 X054 2811 1010 0000 0123 456`, 100), Error);
+                })
+                it('should throw an error if the surname is less than 5 characters', () => {
+                    assert.throws(() => Account(` Danilo `, ` Doe `, `IT60 X054 2811 1010 0000 0123 456`, 100), Error);
+                })
             })
         })
 

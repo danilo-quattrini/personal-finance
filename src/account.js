@@ -1,4 +1,5 @@
-import {isNumber, isPositive, isString} from './validator/validator.js'
+import { isNumber, isPositive, isString, size } from './validator/validator.js'
+import { sanitizeString } from "./sanitizer.js";
 import {deposit, withdraw, pay, earn} from './transaction.js'
 import { isIBAN } from "./validator/isIBAN.js";
 import { transfer } from "./transfer.js";
@@ -58,11 +59,11 @@ function getHistory() {
  * @param {number} balance
  */
 function validate(name, surname, iban, balance) {
-    if (!isString(name)) {
-        throw new Error(`The name you insert it's not valid`);
+    if (! isString(name) || ! size(name, 5 , 255)) {
+        throw new Error(`The name you insert it's not valid string (min: 6 characters long max: 255)`);
     }
-    if (!isString(surname)) {
-        throw new Error(`The surname you insert it's not valid`);
+    if (! isString(surname) || ! size(surname, 5 , 255)) {
+        throw new Error(`The surname you insert it's not valid string \n(min: 6 characters long max: 255)`);
     }
     if(!isIBAN(iban)) {
         throw new Error(`The IBAN you insert it's not a valid format`);
@@ -84,6 +85,7 @@ export async function createAccount(ask){
         const balance = await ask(`Insert an initial balance for your account => `);
         const countryCode = await ask(`Insert your country code \n(IT = Italy, GB = Great Britain, FR = France, ecc..) => `);
         const iban = generateIBAN(countryCode);
+        validate(name, surname, iban, Number(balance));
 
         if(iban) console.log(`✔ IBAN generated successfully: ${iban}`)
         return Account(name, surname, iban, +balance);
@@ -95,6 +97,8 @@ export async function createAccount(ask){
 
 
 export function Account(name, surname, iban, balance) {
+    name = sanitizeString(name);
+    surname = sanitizeString(surname);
     validate(name, surname, iban, balance);
     return {
         name,
