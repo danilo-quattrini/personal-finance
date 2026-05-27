@@ -125,5 +125,35 @@ describe("History operations", () => {
                 assert.isEmpty(result);
             });
         })
+
+        describe('clear history', () => {
+            it('should throw an error if the account is not define ', () => {
+                let john = null;
+                assert.throws(() => clearHistory(john), Error, `Can clear the history, no account has been declared`)
+            })
+            it('should throw an error if the history is empty', () => {
+                const john = Account(`John`, `Doe`, `IT24G0326350576WMLFI6LASP06`, 100)
+                assert.throws(() => clearHistory(john), Error, `Can't clear the history, no operation has been made`)
+            })
+            it(`should return the history of Alice empty without any operation`, () => {
+                clearHistory(alice);
+                assert.deepEqual([], alice.getHistory());
+            })
+        })
+
+        describe('last operation', () => {
+            it(`should not throw a message if alice has made any operation`, () => {
+                assert.doesNotThrow(() => getLastOperation(alice), Error, `You didn't made any operation yet!`);
+            })
+            it(`should throw a message if alice has not made any operation`, () => {
+                clearHistory(alice);
+                assert.throw(() => getLastOperation(alice), Error, `You didn't made any operation yet!`);
+            })
+            it(`should show the last operation made by Alice`, () => {
+                const accountHistory = alice.getHistory();
+                const lastOperationInHistory = accountHistory[accountHistory.length - 1];
+                assert.include(getLastOperation(alice), lastOperationInHistory);
+            })
+        })
     })
 })
