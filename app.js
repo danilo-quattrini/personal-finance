@@ -26,7 +26,7 @@ q: Quit
         case "1": {
             const account = await createAccount(ask)
             if (account) {
-                bank.push(account);
+                bank.add(account);
             }
             break;
         }
