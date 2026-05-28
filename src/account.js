@@ -1,55 +1,10 @@
 import { isNumber, isPositive, isString, size } from './validator/validator.js'
 import { sanitizeString } from "./sanitizer.js";
-import {deposit, withdraw, pay, earn} from './transaction.js'
+import { credit, debit } from './transaction.js'
 import { isIBAN } from "./validator/isIBAN.js";
 import { transfer } from "./transfer.js";
 import { generateIBAN } from "./factories/IBANgenerator.js";
 import { log, message } from "./logger.js";
-/**
- * Returns the balance of the user
- * @returns {number} the balance of the user
- */
-function getBalance() {
-    return this.balance;
-}
-/**
- * Returns the name of the user
- * @returns {string} the name of the user
- */
-function getName() {
-    return this.name;
-}
-
-/**
- * Returns the surname of the user
- * @returns {string} the surname of the user
- */
-function getSurname() {
-    return this.surname;
-}
-
-/**
- * Returns the surname of the user
- * @returns {string} the surname of the user
- */
-function getFullName() {
-    return this.name + ' ' + this.surname;
-}
-
-/**
- * Returns the iban of the user
- * @returns {string} the iban of the user
- */
-function getIBAN() {
-    return this.iban;
-}
-/**
- * Return an array with all the transactions made by the user.
- * @returns {[]} array with a list of object that represent each operation
- */
-function getHistory() {
-    return this.transactionHistory;
-}
 
 /**
  * Function to validate the values
@@ -107,16 +62,95 @@ export function Account(name, surname, iban, balance) {
         iban,
         balance,
         transactionHistory: [],
-        getBalance,
-        getName,
-        getSurname,
-        getIBAN,
-        getFullName,
-        getHistory,
-        deposit,
-        withdraw,
-        pay,
-        earn,
-        transfer,
+        /**
+         * Returns the balance of the user
+         * @returns {number} the balance of the user
+         */
+        getBalance() {
+            return this.balance;
+        },
+        /**
+         * Returns the name of the user
+         * @returns {string} the name of the user
+         */
+        getName() {
+            return this.name;
+        },
+        /**
+         * Returns the surname of the user
+         * @returns {string} the surname of the user
+         */
+        getSurname() {
+            return this.surname;
+        },
+        /**
+         * Returns the surname of the user
+         *
+         * @returns {string} the surname of the user
+         */
+        getFullName() {
+            return this.name + ' ' + this.surname;
+        },
+        /**
+         * Returns the iban of the user
+         *
+         * @returns {string} the iban of the user
+         */
+        getIBAN() {
+            return this.iban;
+        },
+        /**
+         * Return an array with all the transactions made by the user.
+         *
+         * @returns { array } array with a list of object that represent each operation
+         */
+        getHistory() {
+            return this.transactionHistory;
+        },
+        /**
+         * Earn an amount of money for something
+         *
+         * @param {number} amount
+         * @param {string | null} description - optional description to add at the transaction
+         */
+        earn(amount, description = null) {
+            credit.call(this, amount, `earn`, description);
+        },
+        /**
+         * Pay an amount of money in the user account.
+         *
+         * @param amount
+         * @param {string | null} description - optional description to add at the transaction
+         */
+        pay(amount, description = null) {
+            debit.call(this, amount, `pay`, description);
+        },
+        /**
+         * Retrive an amount of money in the user account.
+         *
+         * @param amount
+         * @param {string | null} description - optional description to add at the transaction
+         */
+        withdraw(amount, description = null) {
+            debit.call(this, amount, `withdraw`, description);
+        },
+        /**
+         * Deposit an amount of money in the user account.
+         *
+         * @param amount
+         * @param {string | null} description - optional description to add at the transaction
+         */
+        deposit(amount, description = null) {
+            credit.call(this, amount, `deposit`, description);
+        },
+        /**
+         * Function that transfer an amoun of money from an account to another.
+         *
+         * @param {number} amount
+         * @param {object} account
+         */
+        transfer(amount, account) {
+            transfer.call(this, amount, account);
+        },
     };
 }
