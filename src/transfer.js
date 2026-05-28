@@ -1,8 +1,11 @@
-import {deepEqual, isNumber, isPositive} from "./validator/validator.js";
+import { deepEqual, isAccount, isNumber, isPositive } from "./validator/validator.js";
 
 function validate(amount, account) {
     if (!account) {
         throw new Error(`You should add the account to the transfer the amount`);
+    }
+    if (! isAccount(account)) {
+        throw new Error(`You should send the money to a valid account`);
     }
     if (!isNumber(amount) || !isPositive(amount)) {
         throw new Error('Amount must be a number and a positive integer');
