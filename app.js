@@ -15,8 +15,9 @@ export async function mainMenu(ask) {
     console.log(`
 =============================
     Personal Finance CLI
-=============================\n
-1: Create account ${! isEmpty(bank) ? `\n2: Choose an account` : `` }
+=============================
+1: Create account
+2: Choose an account
 q: Quit
     `);
 
@@ -30,12 +31,22 @@ q: Quit
             }
             break;
         }
+        case "2":
+            try {
+                console.log(bank.getAccounts())
+            } catch(err) {
+                log.error(err.message);
+            }
+            break;
+
         case "q":
             return 'exit';
         default:
             log.error(`The choice you wrote it's incorrect: ${choice}`);
             return `The choice you wrote it's incorrect: ${choice}`;
     }
+    await ask(`Press enter to continue `);
+    await mainMenu(ask);
 }
 
 /**
