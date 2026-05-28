@@ -1,4 +1,5 @@
 import { isAccount, isEmpty } from "./validator/validator.js";
+import { log } from "./logger.js";
 
 /**
  * Create a new bank object to contains accounts
@@ -9,6 +10,7 @@ export function Bank() {
     return {
         accounts : [],
         add,
+        addMany,
         getAccounts,
     }
 }
@@ -23,6 +25,19 @@ export function add(account) {
         throw new Error("Account is not defined or should be a valid one and not be empty");
     }
     this.accounts.push(account);
+}
+/**
+ * Add an array of new accounts to inside the bank
+ *
+ * @param {array} accounts array of accounts to add in the bank
+ */
+export function addMany(accounts) {
+    accounts.forEach(account => {
+        if ( isEmpty(account) || ! isAccount(account) ) {
+            return log.error(`${Object.values(account)} not added to the bank for invalid format or emptiness`);
+        }
+        this.accounts.push(account);
+    })
 }
 
 /**
