@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { Account } from "../src/account.js";
 import { generateIBAN } from "../src/factories/IBANgenerator.js";
-import { Bank } from "../src/bank.js";
+import { Bank } from "../src/Bank.js";
 
 describe("Bank Test", () => {
     describe("error cases", () => {
@@ -13,7 +13,7 @@ describe("Bank Test", () => {
             assert.throws(() => bank.getAccounts(), Error, `The bank is empty it doesn't have any account`);
         })
         it("should throw an error if you try to enter in the bank with a fake account", () => {
-            const fakeUser = { name: `Malicious`, surname: `User`, iban:`IT60 X054 2811 1010 0000 0123 456`, balance:1000 }
+            const fakeUser = { name: `Malicious`, surname: `User`, iban:`IT60 X054 2811 1010 0000 0123 456`, balance: 1000 }
             assert.throws(() => bank.add(fakeUser), Error, `Account is not defined or should be a valid one and not be empty`);
         })
     })

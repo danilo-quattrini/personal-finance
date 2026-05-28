@@ -2,10 +2,10 @@ import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { createAccount } from "./src/account.js";
 import { log } from "./src/logger.js";
-import { isEmpty } from "./src/validator/validator.js";
+import { Bank } from "./src/Bank.js";
 
 const rl = readline.createInterface({ input, output });
-const bank = [];
+const bank = new Bank();
 
 async function ask(question) {
     return await rl.question(question);
