@@ -3,8 +3,8 @@ import { assert } from "chai";
 
 describe('Transfer operation', () => {
     describe('error case', () => {
-        const alice = Account(`Alice`, `Keller`, 'IT24G0326350576WMLFI6LASP06', 100);
-        const bob = Account(`Bob`, `Giovi`, 'IT42Z0330662501TY2FNOOE9BHB', 500);
+        const alice = Account(`Alicess`, `Kellery`, 'IT24G0326350576WMLFI6LASP06', 100);
+        const bob = Account(`Bobber`, `Giovi0je`, 'IT42Z0330662501TY2FNOOE9BHB', 500);
 
         it(`should throw an error if ${alice.getName()} doesn't have enough money for the transfer`, () => {
             assert.throws(() => alice.transfer(200, bob), Error, `You don't have enough money for the transfer`);
@@ -19,6 +19,10 @@ describe('Transfer operation', () => {
         it(`should throw an error if ${alice.getName()} send the money to herself`, () => {
             assert.throws(() => alice.transfer(100, alice), Error, `You cant transfer the money to yourself`);
         } );
+        it(`should throw an error if ${alice.getName()} send the money to a fake account`, () => {
+            const fakeAccount = { name: `Malicious`, surname: `User`, iban:`IT60 X054 2811 1010 0000 0123 456`, balance:1000 }
+            assert.throws(() => alice.transfer(100, fakeAccount), Error, `You should send the money to a valid account`);
+        } );
     });
 
     describe('normal case', () => {
@@ -27,8 +31,8 @@ describe('Transfer operation', () => {
             let  alice, bob, bobBalanceBeforeTransfer;
             // Runs before each `it()` test
             beforeEach(() => {
-                alice = Account(`Alice`, `Keller`, 'IT24G0326350576WMLFI6LASP06', 100);
-                bob = Account(`Bob`, `Giovi`, 'IT42Z0330662501TY2FNOOE9BHB', 500);
+                alice = Account(`Alicess`, `Kellery`, 'IT24G0326350576WMLFI6LASP06', 100);
+                bob = Account(`Bobber`, `Giovi0je`, 'IT42Z0330662501TY2FNOOE9BHB', 500);
                 bobBalanceBeforeTransfer = bob.getBalance();
                 alice.transfer(100, bob);
             })
@@ -44,7 +48,7 @@ describe('Transfer operation', () => {
                     type: 'pay',
                     amount: 100,
                     userBalance: 0,
-                    description: `Transfer amount: $100 to Bob Giovi`
+                    description: `Transfer amount: $100 to Bobber Giovi0je`
                 });
             });
         })
@@ -53,8 +57,8 @@ describe('Transfer operation', () => {
             let  alice, bob, aliceBalanceBeforeTransfer;
 
             beforeEach(() => {
-                alice = Account(`Alice`, `Keller`, 'IT24G0326350576WMLFI6LASP06', 100);
-                bob = Account(`Bob`, `Giovi`, 'IT42Z0330662501TY2FNOOE9BHB', 500);
+                alice = Account(`Alicess`, `Kellery`, 'IT24G0326350576WMLFI6LASP06', 100);
+                bob = Account(`Bobber`, `Giovi0je`, 'IT42Z0330662501TY2FNOOE9BHB', 500);
                 aliceBalanceBeforeTransfer = alice.getBalance();
                 bob.transfer(400, alice);
             });
@@ -70,7 +74,7 @@ describe('Transfer operation', () => {
                     type: 'pay',
                     amount: 400,
                     userBalance: 100,
-                    description: `Transfer amount: $400 to Alice Keller`
+                    description: `Transfer amount: $400 to Alicess Kellery`
                 });
             });
         });
