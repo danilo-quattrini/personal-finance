@@ -18,18 +18,25 @@ describe("Bank Test", () => {
         })
     })
     describe("normal cases", () => {
-        let bank, user;
+        let bank, user, user2, user3;
         beforeEach(() => {
             user = Account(`Danilo`, `Quattrini`, generateIBAN(`IT`), 1000)
+            user2 = Account(`Lorenzo`, `Mancini`, generateIBAN(`IT`), 1000)
+            user3 = Account(`Francesco`, `Rendina`, generateIBAN(`IT`), 1000)
             bank = Bank();
-            bank.add(user);
+            bank.addMany([user, user2, user3]);
         });
         it("should not throw an error if the bank have an account", () => {
             assert.doesNotThrow(() => bank.getAccounts(), Error, `The bank is empty it doesn't have any account`);
         })
         it("should show all the account in the bank", () => {
-            console.log(bank.getAccounts())
             assert.isNotEmpty(bank.getAccounts())
+        })
+        it("should show the previous account added and not the fake one", () => {
+            const realUser = Account(`Lorenzo`, `Recchia`, generateIBAN(`IT`), 1000)
+            const fakeUser = { name: `Malicious`, surname: `User`, iban:`IT60 X054 2811 1010 0000 0123 456`, balance:1000 }
+            bank.addMany([realUser, fakeUser])
+            assert.deepEqual(bank.getAccounts()[3], realUser);
         })
     })
 })
