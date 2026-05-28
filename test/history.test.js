@@ -32,8 +32,8 @@ describe("History operations", () => {
         let alice, bob;
 
         beforeEach(() => {
-            alice = Account(`Alice`, `Mancini`,'IT24G0326350576WMLFI6LASP06',  100);
-            bob = Account(`Bob`, `Fernando`, 'IT24G0326350576WMLFI6LASP06', 300);
+            alice = Account(`Alices`, `Mancini`,'IT24G0326350576WMLFI6LASP06',  100);
+            bob = Account(`BobFantastic`, `Fernando`, 'IT24G0326350576WMLFI6LASP06', 300);
             alice.deposit(100);
             alice.withdraw(100);
             alice.pay(100);
@@ -132,7 +132,7 @@ describe("History operations", () => {
                 assert.throws(() => clearHistory(john), Error, `Can clear the history, no account has been declared`)
             })
             it('should throw an error if the history is empty', () => {
-                const john = Account(`John`, `Doe`, `IT24G0326350576WMLFI6LASP06`, 100)
+                const john = Account(`Johnny`, `Doberman`, `IT24G0326350576WMLFI6LASP06`, 100)
                 assert.throws(() => clearHistory(john), Error, `Can't clear the history, no operation has been made`)
             })
             it(`should return the history of Alice empty without any operation`, () => {
