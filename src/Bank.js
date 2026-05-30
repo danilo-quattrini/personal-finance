@@ -60,5 +60,15 @@ export function Bank() {
             }
             return this.accounts;
         },
+        /**
+         * Return a single account from an index give to the function argument
+         *
+         * @param {number} indexToFind of the account to get from the bank.
+         * @return {object} account that returns from the selected index
+         */
+        getAccount (indexToFind) {
+            const accountFound =  this.accounts.find((account, index) => index === indexToFind)
+            return accountFound ?? null;
+        },
     }
 }
