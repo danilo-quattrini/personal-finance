@@ -10,6 +10,22 @@ export function Bank() {
     return {
         accounts: [],
         /**
+         * Show all the accounts that are inside the bank
+         */
+        showAccounts () {
+            try {
+                const accounts = this.getAccounts();
+                console.log(`| # | Full Name | IBAN | Balance |`);
+                accounts.forEach((account, index) => {
+                    console.log(`| ${index} | ${account.name} ${account.surname} | ${account.iban}  | $${account.balance} |`);
+                });
+                return true;
+            } catch (error) {
+                log.error(error.message);
+                return false;
+            }
+        },
+        /**
          * Add a new account inside the bank
          *
          * @param {object} account the user to add in the bank
