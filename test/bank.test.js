@@ -16,6 +16,14 @@ describe("Bank Test", () => {
             const fakeUser = { name: `Malicious`, surname: `User`, iban:`IT60 X054 2811 1010 0000 0123 456`, balance: 1000 }
             assert.throws(() => bank.add(fakeUser), Error, `Account is not defined or should be a valid one and not be empty`);
         })
+        it("should return false if you try to show accounts that doesn't exists in the bank", () => {
+            assert.isFalse(bank.showAccounts());
+        })
+        describe(`find account from index`, () => {
+            it("should throw an error if the account selected from the index doesn't exists", () => {
+                assert.isNull( bank.getAccount(1));
+            })
+        })
     })
     describe("normal cases", () => {
         let bank, user, user2, user3;
@@ -37,6 +45,17 @@ describe("Bank Test", () => {
             const fakeUser = { name: `Malicious`, surname: `User`, iban:`IT60 X054 2811 1010 0000 0123 456`, balance:1000 }
             bank.addMany([realUser, fakeUser])
             assert.deepEqual(bank.getAccounts()[3], realUser);
+        })
+        it("should return true if you try to show accounts", () => {
+            assert.isTrue(bank.showAccounts());
+        })
+        describe(`find account from index`, () => {
+            it("should get the account selected from the index", () => {
+                assert.deepEqual(bank.getAccount(1), user2);
+            })
+            it("should get different account selected from the index", () => {
+                assert.notDeepEqual(bank.getAccount(1), user3);
+            })
         })
     })
 })
